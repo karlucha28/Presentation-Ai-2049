@@ -1,0 +1,380 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --index: calc(1vw + 1vh);
+    --text: #e7e7e0;
+    --transition: transform 1s cubic-bezier(.075, .5, 0, 1); /* Increased from 0.75s */
+}
+
+/* Font definitions */
+@font-face {
+    font-family: kamerik-k;
+    src: url(../fonts/kamerik205-heavy.woff2);
+}
+
+@font-face {
+    font-family: raleway_f;
+    src: url(../fonts/raleway-regular.woff2);
+}
+
+@font-face {
+    font-family: raleway_f;
+    src: url(../fonts/raleway-black.woff2);
+    font-weight: 900;
+}
+
+/* Common styles */
+body {
+    background-color: #010101;
+    color: #fff;
+    overflow-x: hidden;
+    line-height: 1.55;
+}
+
+/* Deep Scroll Section */
+.deep-scroll {
+    font-family: kamerik-k;
+    height: 300vh; /* Changed from 550vh to 300vh (30%) */
+    position: relative;
+    z-index: 1;
+    background-color: #010101;
+}
+
+.scene {
+    height: 300vh; /* Match deep-scroll height */
+}
+
+.deep-scroll .layer {
+    height: 100vh;
+    width: 100vw;
+    background-position: center;
+    background-size: cover;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation-timeline: scroll();
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-range: 0 200vh; /* Adjusted animation range */
+}
+
+/* Deep scroll animations */
+.deep-scroll .layer:nth-child(1) { animation-name: animation-1; }
+@keyframes animation-1 { to { scale: 1.25; } }
+
+.deep-scroll .layer:nth-child(2) { animation-name: animation-2; }
+@keyframes animation-2 { to { scale: 1.275; } }
+
+.deep-scroll .layer:nth-child(3) { animation-name: animation-3; }
+@keyframes animation-3 { to { scale: 1.5; } }
+
+.deep-scroll .layer:nth-child(4) { animation-name: animation-4; }
+@keyframes animation-4 { to { scale: 2; } }
+
+.deep-scroll .layer:nth-child(5) {
+    opacity: 0;
+    animation-range: 150vh 200vh; /* Adjusted end animation range */
+    animation-name: animation-end;
+}
+@keyframes animation-end { to { opacity: 1; } }
+
+/* Add darkness transition to deep scroll end */
+.layer__end::before {
+    content: '';
+    background-color: #010101;
+    inset: 0;
+    position: absolute;
+    opacity: 0;
+    animation-timeline: scroll();
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-range: 200vh 275vh; /* End darkness transition sooner */
+    animation-name: animation-darkness;
+}
+@keyframes animation-darkness { to { opacity: 1; } }
+
+/* Layer content styles */
+.layer__content {
+    padding: 4vh 4.75vw;
+    backdrop-filter: blur(25px) brightness(.98);
+    animation-timeline: scroll();
+    animation-timing-function: linear;
+    animation-fill-mode: both;
+    animation-range: 0 45vh;
+    animation-name: animation-head;
+}
+@keyframes animation-head { to { opacity: 0; filter: blur(20px); } }
+
+.layer__content h1 {
+    text-transform: uppercase;
+    font-size: calc(var(--index) * 4.5);
+    text-align: center;
+    line-height: .9em;
+    letter-spacing: -.15vw;
+}
+
+/* Forest Parallax Section */
+.wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 2;
+    overflow: hidden;
+    display: none;
+    background-color: #010101;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out; /* Increased from 1s */
+}
+
+.wrapper.active {
+    display: block;
+    opacity: 1;
+    transition-delay: 0.5s; /* Delay fade-in to match with darkness transition */
+}
+
+.wrapper::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: #010101;
+    z-index: 10;
+    opacity: 1;
+    transition: opacity 1.5s ease-in-out;
+}
+
+.wrapper.active::before {
+    opacity: 0;
+}
+
+.content {
+    will-change: transform;
+    position: relative;
+    min-height: 250vh; /* Increased from 200vh */
+}
+
+/* Fix layers and header styles */
+.main-header {
+    position: relative;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    overflow: visible; /* Added to ensure ground.png is visible */
+}
+
+.main-header::after {
+    content: '';
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    height: calc(var(--index) * 10);
+    background-image: url(../img/ground.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    bottom: calc(var(--index) * -4.5);
+}
+
+.layers {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+.layer {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    background-size: cover;
+    background-position: center;
+    will-change: transform;
+    z-index: 2;
+    transition: var(--transition);
+}
+
+.layers__title {
+    font-size: calc(var(--index) * 2.65);
+    letter-spacing: calc(var(--index) / 2.25);
+    will-change: transform;
+    transition: var(--transition);
+}
+
+.layers__caption {
+    font-size: calc(var(--index) / 1.175);
+    letter-spacing: calc(var(--index) / 3.5);
+    margin-top: calc(var(--index) * -.75);
+    will-change: transform;
+    transition: var(--transition);
+}
+
+/* Fix parallax transforms */
+.layers__base {
+    transform: translate3d(0, calc(var(--scrollTop) / 1.6), 0);
+    z-index: 0;
+}
+
+.layers__middle {
+    transform: translate3d(0, calc(var(--scrollTop) / 2.5), 0);
+    z-index: 1;
+}
+
+.layers__front {
+    transform: translate3d(0, calc(var(--scrollTop) / 5.7), 0);
+    z-index: 2;
+}
+
+.layer__header {
+    z-index: 3;
+    transform: translate3d(0, calc(var(--scrollTop) / 5.7), 0); /* Match with layers__front speed */
+    text-transform: uppercase;
+    font-weight: 900;
+    color: var(--text);
+    text-shadow: 0 0 15px #9d822b;
+    transition: var(--transition);
+}
+
+/* Fix article positioning */
+.main-article {
+    --main-article-transform: translate3d(0, calc(var(--scrollTop) / -7.5), 0);
+    min-height: 100vh;
+    position: relative;
+    top: 0; /* Changed from 100vh */
+    margin: 0;
+    padding: 0;
+    background-color: #010101;
+    /* ...rest of existing article styles... */
+}
+
+/* Remove duplicate styles and unnecessary transforms */
+/* ...rest of existing styles... */
+
+/* Article section */
+.main-article {
+    --main-article-transform: translate3d(0, calc(var(--scrollTop) / -7.5), 0);
+    min-height: 100vh;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    padding-top: calc(var(--index) * 10);
+    background-color: #010101;
+    transform: translateY(0);
+    transition: transform 0.5s ease-out;
+}
+
+.main-article__header {
+    text-transform: uppercase;
+    font-size: calc(var(--index) * 1.8);
+    letter-spacing: calc(var(--index) / 7.5);
+    transform: var(--main-article-transform);
+    transition: var(--transition);
+    will-change: transform;
+}
+
+.main-article__paragraph {
+    max-width: calc(var(--index) * 30);
+    font-size: calc(var(--index) * .9);
+    margin-top: calc(var(--index) / 1.25);
+    transform: var(--main-article-transform);
+    transition: var(--transition);
+    will-change: transform;
+}
+
+/* Utility classes */
+.content {
+    will-change: transform;
+    position: relative;
+    transition: transform 0.5s ease-out;
+    min-height: 250vh; /* Increased from 200vh */
+    transform-origin: top;
+}
+
+.copy {
+    position: absolute;
+    bottom: calc(var(--index) * 2.5);
+    opacity: .45;
+    font-size: calc(var(--index) * .75);
+    letter-spacing: calc(var(--index) / 37.5);
+}
+
+/* Wrapper modifications */
+.wrapper.active {
+    display: block;
+}
+
+.wrapper.active .content {
+    opacity: 1;
+    visibility: visible;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Remove unnecessary margins/padding causing gaps */
+.main-article {
+    position: relative;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    /* ...existing styles... */
+}
+
+/* Update container height */
+.container {
+    height: 1000vh; /* Total scroll height */
+    position: relative;
+    background-color: #010101;
+}
+
+/* Video container styles */
+.video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 3;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-in-out;
+}
+
+.video-container iframe {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Add video fade in animation */
+@keyframes video-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.video-container {
+    animation: video-fade 1s ease-in-out forwards;
+    animation-timeline: scroll();
+    animation-range: 275vh 300vh; /* Start video after darkness is complete */
+}

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Combined Parallax Experience</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="libs/gsap/gsap.min.js" defer></script>
+    <script src="libs/gsap/ScrollTrigger.min.js" defer></script>
+    <script src="libs/gsap/ScrollSmoother.min.js" defer></script>
+    <script src="js/app.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Deep Scroll Section -->
+        <section class="deep-scroll">
+            <header>
+                <div class="scene">
+                    <div class="layer" style="background-image: url(img/layer-4.jpg)"></div>
+                    <div class="layer" style="background-image: url(img/layer-3.png)">
+                        <div class="layer__content">
+                            <h1>Deep Scroll <br>Experience</h1>
+                        </div>
+                    </div>
+                    <div class="layer" style="background-image: url(img/layer-2.png)"></div>
+                    <div class="layer" style="background-image: url(img/layer-1.png)"></div>
+                    <div class="layer">
+                        <div class="layer__end">
+                            <h3>Continue to Forest</h3>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="video-container">
+                <iframe 
+                    id="videoPlayer"
+                    width="100%" 
+                    height="100%" 
+                    src="https://www.youtube.com/embed/I4NdTuDfJBk?enablejsapi=1&controls=0&loop=1&playlist=I4NdTuDfJBk&rel=0&showinfo=0" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </section>
+
+        <!-- Fairy Forest Section -->
+        <div class="wrapper">
+            <div class="content">
+                <header class="main-header">
+                    <div class="layers">
+                        <div class="layer__header">
+                            <div class="layers__caption">Welcome to Parallax</div>
+                            <div class="layers__title">Fairy Forest</div>
+                        </div>
+                        <div class="layer layers__base" style="background-image: url(img/layer-base.png);"></div>
+                        <div class="layer layers__middle" style="background-image: url(img/layer-middle.png);"></div>
+                        <div class="layer layers__front" style="background-image: url(img/layer-front.png);"></div>
+                    </div>
+                </header>
+            
+                <article class="main-article" style="background-image: url(img/dungeon.jpg);">
+                    <div class="main-article__content">
+                        <h2 class="main-article__header">Journey's End</h2>
+                        <p class="main-article__paragraph">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+                    </div>
+                    <div class="copy">© WebDesign Master</div>
+                </article>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
