@@ -872,11 +872,67 @@ body {
     font-size: 12px;
     fill: #ffffff;
     text-anchor: middle;
-    opacity: 0.7;
+    opacity: 0.9;
     filter: drop-shadow(0 0 3px #ffffff);
+    paint-order: stroke;
+    stroke: rgba(0, 0, 0, 0.8);
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    z-index: 7;
+}
+
+.graph-overlay.ai-budget text {
+    z-index: 7;
+    position: relative;
+}
+
+.label-text.futuristic,
+.highlight-text,
+.metric-text {
+    paint-order: stroke;
+    stroke: rgba(0, 0, 0, 0.8);
+    stroke-width: 2px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
 }
 
 .graph-overlay.government.hidden {
     transform: translateY(-150%);
     opacity: 0;
 }
+
+/* ...existing code... */
+
+.team-members {
+    text-align: center;
+    color: #00fff2;
+    font-family: 'kamerik-k', sans-serif;
+}
+
+.member {
+    font-size: calc(var(--index) * 1);
+    margin: 1rem 0;
+    letter-spacing: 2px;
+    filter: drop-shadow(0 0 5px #00fff2);
+    opacity: 0;
+    animation: fadeInMember 0.5s forwards;
+}
+
+.member:nth-child(1) { animation-delay: 0.2s; }
+.member:nth-child(2) { animation-delay: 0.4s; }
+.member:nth-child(3) { animation-delay: 0.6s; }
+.member:nth-child(4) { animation-delay: 0.8s; }
+
+@keyframes fadeInMember {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ...existing code... */
