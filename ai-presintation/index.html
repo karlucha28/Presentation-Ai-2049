@@ -39,7 +39,6 @@
                     playsinline>
                 </video>
                 <audio id="videoAudio" src="videos/ironclip.mp3" preload="auto" loop></audio>
-                <button class="sound-toggle" id="soundToggle">🔊 Enable Sound</button>
             </div>
         </section>
 
@@ -67,6 +66,363 @@
                 </article>
             </div>
         </div>
+        <!-- Add new final video section -->
+        <section class="final-video-section">
+            <div class="final-video-container">
+                <video 
+                    id="finalVideo"
+                    src="videos/gifIronMan.mp4"
+                    loop
+                    playsinline
+                    muted
+                    autoplay>
+                </video>
+            </div>
+            <div class="graph-overlay">
+                <svg viewBox="0 0 1000 600">
+                    <!-- Grid lines -->
+                    <defs>
+                        <pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse">
+                            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(0, 157, 255, 0.1)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid)" />
+                    
+                    <!-- Axes -->
+                    <line class="axis" x1="50" y1="550" x2="950" y2="550" />
+                    <line class="axis" x1="50" y1="50" x2="50" y2="550" />
+                    
+                    <!-- Metrics -->
+                    <g class="metrics">
+                        <!-- Y-axis metrics -->
+                        <text x="40" y="550" class="metric-text">0</text>
+                        <text x="40" y="450" class="metric-text">200</text>
+                        <text x="40" y="350" class="metric-text">400</text>
+                        <text x="40" y="250" class="metric-text">600</text>
+                        <text x="40" y="150" class="metric-text">800</text>
+                        <text x="40" y="50" class="metric-text">1000</text>
+                        
+                        <!-- X-axis metrics -->
+                        <text x="50" y="570" class="metric-text">1950</text>
+                        <text x="200" y="570" class="metric-text">1960</text>
+                        <text x="350" y="570" class="metric-text">1970</text>
+                        <text x="500" y="570" class="metric-text">1980</text>
+                        <text x="650" y="570" class="metric-text">1990</text>
+                        <text x="800" y="570" class="metric-text">2000</text>
+                        <text x="950" y="570" class="metric-text">2010</text>
+                    </g>
+
+                    <!-- Graph Lines with glow effect -->
+                    <path class="graph-line oil" d="M50,500 L125,490 L200,480 L275,465 L350,450 L425,415 L500,380 L575,340 L650,300 L725,275 L800,250 L875,225 L950,200">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" fill="freeze" />
+                    </path>
+                    <path class="graph-line gas" d="M50,480 L125,465 L200,450 L275,425 L350,400 L425,360 L500,320 L575,300 L650,280 L725,250 L800,220 L875,200 L950,180">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" fill="freeze" />
+                    </path>
+                    <path class="graph-line coal" d="M50,450 L125,435 L200,420 L275,400 L350,380 L425,365 L500,350 L575,335 L650,320 L725,310 L800,300 L875,285 L950,270">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" fill="freeze" />
+                    </path>
+                    
+                    <!-- Cost Graph Lines with glow effect -->
+                    <path class="graph-line cost-oil" d="M50,500 L125,475 L200,450 L275,400 L350,350 L425,300 L500,250 L575,200 L650,150 L725,125 L800,100 L875,75 L950,50">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" begin="1s" fill="freeze" />
+                    </path>
+                    <path class="graph-line cost-gas" d="M50,490 L125,465 L200,440 L275,390 L350,340 L425,290 L500,240 L575,190 L650,140 L725,115 L800,90 L875,65 L950,40">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" begin="1.2s" fill="freeze" />
+                    </path>
+                    <path class="graph-line cost-coal" d="M50,480 L125,455 L200,430 L275,380 L350,330 L425,280 L500,230 L575,180 L650,130 L725,105 L800,80 L875,55 L950,30">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" begin="1.4s" fill="freeze" />
+                    </path>
+
+                    <!-- Add cost metrics to right Y-axis -->
+                    <line class="axis" x1="950" y1="50" x2="950" y2="550" />
+                    <g class="metrics right">
+                        <text x="960" y="550" class="metric-text">$0</text>
+                        <text x="960" y="450" class="metric-text">$200</text>
+                        <text x="960" y="350" class="metric-text">$400</text>
+                        <text x="960" y="250" class="metric-text">$600</text>
+                        <text x="960" y="150" class="metric-text">$800</text>
+                        <text x="960" y="50" class="metric-text">$1000</text>
+                    </g>
+
+                    <!-- Labels with glow -->
+                    <text x="500" y="580" class="label-text futuristic">Timeline (Years)</text>
+                    <text x="30" y="300" class="label-text futuristic" transform="rotate(-90,30,300)">Resources (Million Barrels)</text>
+                    
+                    <!-- Legend with glow effect -->
+                    <rect x="750" y="50" width="200" height="180" class="legend-bg"/>
+                    <circle cx="770" cy="70" r="5" class="oil-dot glow"/>
+                    <text x="790" y="75" class="legend-text futuristic">Oil Reserves</text>
+                    <circle cx="770" cy="100" r="5" class="gas-dot glow"/>
+                    <text x="790" y="105" class="legend-text futuristic">Natural Gas</text>
+                    <circle cx="770" cy="130" r="5" class="coal-dot glow"/>
+                    <text x="790" y="135" class="legend-text futuristic">Coal Deposits</text>
+                    <circle cx="770" cy="160" r="5" class="cost-oil-dot glow"/>
+                    <text x="790" y="165" class="legend-text futuristic">Oil Cost</text>
+                    <circle cx="770" cy="190" r="5" class="cost-gas-dot glow"/>
+                    <text x="790" y="195" class="legend-text futuristic">Gas Cost</text>
+                    <circle cx="770" cy="220" r="5" class="cost-coal-dot glow"/>
+                    <text x="790" y="225" class="legend-text futuristic">Coal Cost</text>
+                </svg>
+            </div>
+        </section>
+        <!-- Add Social Cost Graph Section -->
+        <section class="social-cost-section">
+            <div class="graph-overlay social">
+                <svg viewBox="0 0 1000 600">
+                    <!-- Grid lines -->
+                    <defs>
+                        <pattern id="grid-social" width="100" height="100" patternUnits="userSpaceOnUse">
+                            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(0, 157, 255, 0.1)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-social)" />
+                    
+                    <!-- Axes -->
+                    <line class="axis" x1="50" y1="550" x2="950" y2="550" />
+                    <line class="axis" x1="50" y1="50" x2="50" y2="550" />
+                    
+                    <!-- Product Categories (updated) -->
+                    <g class="metrics bottom">
+                        <text x="100" y="570" class="metric-text">Plastic</text>
+                        <text x="250" y="570" class="metric-text">Cigarettes</text>
+                        <text x="400" y="570" class="metric-text">Coal Power</text>
+                        <text x="550" y="570" class="metric-text">Fast Fashion</text>
+                        <text x="700" y="570" class="metric-text">Pesticides</text>
+                        <text x="850" y="570" class="metric-text">Mining</text>
+                    </g>
+
+                    <!-- Cost Scale (Y-axis) -->
+                    <g class="metrics left">
+                        <text x="40" y="550" class="metric-text">$0B</text>
+                        <text x="40" y="450" class="metric-text">$100B</text>
+                        <text x="40" y="350" class="metric-text">$200B</text>
+                        <text x="40" y="250" class="metric-text">$300B</text>
+                        <text x="40" y="150" class="metric-text">$400B</text>
+                        <text x="40" y="50" class="metric-text">$500B</text>
+                    </g>
+
+                    <!-- Axis Labels -->
+                    <text x="500" y="595" class="label-text futuristic">Industry Types</text>
+                    <text x="30" y="300" class="label-text futuristic" transform="rotate(-90,30,300)">Annual Cost (Billions USD)</text>
+
+                    <!-- Cost Bars (all bars with consistent width) -->
+                    <rect class="cost-bar private" x="85" y="400" width="40" height="150" />
+                    <rect class="cost-bar social" x="85" y="200" width="40" height="200" />
+                    
+                    <rect class="cost-bar private" x="235" y="350" width="40" height="200" />
+                    <rect class="cost-bar social" x="235" y="100" width="40" height="250" />
+                    
+                    <rect class="cost-bar private" x="385" y="300" width="40" height="250" />
+                    <rect class="cost-bar social" x="385" y="50" width="40" height="250" />
+                    
+                    <rect class="cost-bar private" x="535" y="380" width="40" height="170" />
+                    <rect class="cost-bar social" x="535" y="180" width="40" height="200" />
+                    
+                    <rect class="cost-bar private" x="685" y="420" width="40" height="130" />
+                    <rect class="cost-bar social" x="685" y="170" width="40" height="250" />
+                    
+                    <rect class="cost-bar private" x="835" y="370" width="40" height="180" />
+                    <rect class="cost-bar social" x="835" y="120" width="40" height="250" />
+
+                    <!-- Labels -->
+                    <text x="500" y="30" class="label-text futuristic">Social vs Private Costs in Major Industries</text>
+                    
+                    <!-- Legend (updated) -->
+                    <rect x="750" y="50" width="200" height="80" class="legend-bg"/>
+                    <rect x="770" y="70" width="20" height="10" class="private-dot"/>
+                    <text x="800" y="80" class="legend-text futuristic">Private Cost</text>
+                    <rect x="770" y="100" width="20" height="10" class="social-dot"/>
+                    <text x="800" y="110" class="legend-text futuristic">Social Cost</text>
+                </svg>
+            </div>
+        </section>
+        <!-- Add Government Spending Graph Section -->
+        <section class="gov-spending-section">
+            <div class="graph-overlay government">
+                <svg viewBox="0 0 1000 600">
+                    <!-- Grid lines -->
+                    <defs>
+                        <pattern id="grid-gov" width="100" height="100" patternUnits="userSpaceOnUse">
+                            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(0, 157, 255, 0.1)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-gov)" />
+                    
+                    <!-- Axes -->
+                    <line class="axis" x1="50" y1="550" x2="950" y2="550" />
+                    <line class="axis" x1="50" y1="50" x2="50" y2="550" />
+                    <line class="axis" x1="950" y1="50" x2="950" y2="550" />
+                    
+                    <!-- Years -->
+                    <g class="metrics bottom">
+                        <text x="50" y="570" class="metric-text">2000</text>
+                        <text x="200" y="570" class="metric-text">2005</text>
+                        <text x="350" y="570" class="metric-text">2010</text>
+                        <text x="500" y="570" class="metric-text">2015</text>
+                        <text x="650" y="570" class="metric-text">2020</text>
+                        <text x="800" y="570" class="metric-text">2023</text>
+                    </g>
+
+                    <!-- Spending Scale (Left) -->
+                    <g class="metrics left">
+                        <text x="40" y="550" class="metric-text">$0T</text>
+                        <text x="40" y="450" class="metric-text">$2T</text>
+                        <text x="40" y="350" class="metric-text">$4T</text>
+                        <text x="40" y="250" class="metric-text">$6T</text>
+                        <text x="40" y="150" class="metric-text">$8T</text>
+                        <text x="40" y="50" class="metric-text">$10T</text>
+                    </g>
+
+                    <!-- Debt Scale (Right) -->
+                    <g class="metrics right">
+                        <text x="960" y="550" class="metric-text">$0T</text>
+                        <text x="960" y="450" class="metric-text">$10T</text>
+                        <text x="960" y="350" class="metric-text">$20T</text>
+                        <text x="960" y="250" class="metric-text">$30T</text>
+                        <text x="960" y="150" class="metric-text">$40T</text>
+                        <text x="960" y="50" class="metric-text">$50T</text>
+                    </g>
+
+                    <!-- Spending Categories -->
+                    <path class="spend-line defense" d="M50,400 L200,380 L350,360 L500,320 L650,280 L800,250" />
+                    <path class="spend-line healthcare" d="M50,420 L200,390 L350,350 L500,300 L650,240 L800,200" />
+                    <path class="spend-line social" d="M50,430 L200,400 L350,370 L500,330 L650,260 L800,220" />
+                    <path class="spend-line interest" d="M50,480 L200,460 L350,440 L500,400 L650,320 L800,280" />
+                    
+                    <!-- National Debt Line -->
+                    <path class="debt-line" d="M50,500 L200,450 L350,400 L500,300 L650,200 L800,100">
+                        <animate attributeName="stroke-dashoffset" from="1000" to="0" dur="2s" fill="freeze" />
+                    </path>
+
+                    <!-- Labels -->
+                    <text x="500" y="30" class="label-text futuristic">U.S. Government Spending vs National Debt</text>
+                    <!-- Add quote -->
+                    <text x="500" y="70" class="quote-text futuristic">"Pentagon Unable to Account for $31 Trillion</text>
+                    <text x="500" y="90" class="quote-text futuristic">in Financial Adjustments Since the 1990s"</text>
+                    
+                    <text x="30" y="300" class="label-text futuristic" transform="rotate(-90,30,300)">Annual Spending (Trillions)</text>
+
+                    <!-- Legend -->
+                    <rect x="700" y="50" width="250" height="160" class="legend-bg"/>
+                    <line x1="720" y1="70" x2="740" y2="70" class="spend-line defense"/>
+                    <text x="750" y="75" class="legend-text futuristic">Defense ($768B)</text>
+                    <line x1="720" y1="100" x2="740" y2="100" class="spend-line healthcare"/>
+                    <text x="750" y="105" class="legend-text futuristic">Healthcare ($1.4T)</text>
+                    <line x1="720" y1="130" x2="740" y2="130" class="spend-line social"/>
+                    <text x="750" y="135" class="legend-text futuristic">Social Security ($1.2T)</text>
+                    <line x1="720" y1="160" x2="740" y2="160" class="spend-line interest"/>
+                    <text x="750" y="165" class="legend-text futuristic">Interest ($475B)</text>
+                    <line x1="720" y1="190" x2="740" y2="190" class="debt-line"/>
+                    <text x="750" y="195" class="legend-text futuristic">National Debt ($31.4T)</text>
+                </svg>
+            </div>
+        </section>
+        <!-- Add AI Budget Graph Section -->
+        <section class="ai-budget-section">
+            <div class="graph-overlay ai-budget">
+                <svg viewBox="0 0 1000 600">
+                    <!-- Grid lines -->
+                    <defs>
+                        <pattern id="grid-ai" width="100" height="100" patternUnits="userSpaceOnUse">
+                            <path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(0, 157, 255, 0.1)" stroke-width="1"/>
+                        </pattern>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-ai)" />
+                    
+                    <!-- Axes -->
+                    <line class="axis" x1="50" y1="550" x2="950" y2="550" />
+                    <line class="axis" x1="50" y1="50" x2="50" y2="550" />
+                    
+                    <!-- Title and Timeline -->
+                    <text x="500" y="30" class="label-text futuristic">AGI Development Budget Timeline (2024-2030)</text>
+                    <text x="500" y="60" class="highlight-text">Total Investment Required: $2.8T</text>
+
+                    <!-- Years -->
+                    <g class="metrics bottom">
+                        <text x="100" y="570" class="metric-text">2024</text>
+                        <text x="240" y="570" class="metric-text">2025</text>
+                        <text x="380" y="570" class="metric-text">2026</text>
+                        <text x="520" y="570" class="metric-text">2027</text>
+                        <text x="660" y="570" class="metric-text">2028</text>
+                        <text x="800" y="570" class="metric-text">2029</text>
+                        <text x="940" y="570" class="metric-text">2030</text>
+                    </g>
+
+                    <!-- Budget Scale -->
+                    <g class="metrics left">
+                        <text x="40" y="550" class="metric-text">$0B</text>
+                        <text x="40" y="450" class="metric-text">$100B</text>
+                        <text x="40" y="350" class="metric-text">$200B</text>
+                        <text x="40" y="250" class="metric-text">$300B</text>
+                        <text x="40" y="150" class="metric-text">$400B</text>
+                        <text x="40" y="50" class="metric-text">$500B</text>
+                    </g>
+
+                    <!-- Budget Stacked Bars - Complete 7 years -->
+                    <!-- 2024 -->
+                    <rect class="budget-bar hardware" x="70" y="450" width="60" height="100"/>
+                    <rect class="budget-bar research" x="70" y="350" width="60" height="100"/>
+                    <rect class="budget-bar infrastructure" x="70" y="250" width="60" height="100"/>
+                    <rect class="budget-bar salaries" x="70" y="200" width="60" height="50"/>
+
+                    <!-- 2025 -->
+                    <rect class="budget-bar hardware" x="210" y="400" width="60" height="150"/>
+                    <rect class="budget-bar research" x="210" y="250" width="60" height="150"/>
+                    <rect class="budget-bar infrastructure" x="210" y="150" width="60" height="100"/>
+                    <rect class="budget-bar salaries" x="210" y="80" width="60" height="70"/>
+
+                    <!-- 2026 -->
+                    <rect class="budget-bar hardware" x="350" y="350" width="60" height="200"/>
+                    <rect class="budget-bar research" x="350" y="200" width="60" height="150"/>
+                    <rect class="budget-bar infrastructure" x="350" y="100" width="60" height="100"/>
+                    <rect class="budget-bar salaries" x="350" y="50" width="60" height="50"/>
+
+                    <!-- 2027 -->
+                    <rect class="budget-bar hardware" x="490" y="300" width="60" height="250"/>
+                    <rect class="budget-bar research" x="490" y="150" width="60" height="150"/>
+                    <rect class="budget-bar infrastructure" x="490" y="80" width="60" height="70"/>
+                    <rect class="budget-bar salaries" x="490" y="30" width="60" height="50"/>
+
+                    <!-- 2028 -->
+                    <rect class="budget-bar hardware" x="630" y="250" width="60" height="300"/>
+                    <rect class="budget-bar research" x="630" y="100" width="60" height="150"/>
+                    <rect class="budget-bar infrastructure" x="630" y="50" width="60" height="50"/>
+                    <rect class="budget-bar salaries" x="630" y="20" width="60" height="30"/>
+
+                    <!-- 2029 -->
+                    <rect class="budget-bar hardware" x="770" y="200" width="60" height="350"/>
+                    <rect class="budget-bar research" x="770" y="80" width="60" height="120"/>
+                    <rect class="budget-bar infrastructure" x="770" y="40" width="60" height="40"/>
+                    <rect class="budget-bar salaries" x="770" y="20" width="60" height="20"/>
+
+                    <!-- 2030 -->
+                    <rect class="budget-bar hardware" x="910" y="150" width="60" height="400"/>
+                    <rect class="budget-bar research" x="910" y="70" width="60" height="80"/>
+                    <rect class="budget-bar infrastructure" x="910" y="40" width="60" height="30"/>
+                    <rect class="budget-bar salaries" x="910" y="20" width="60" height="20"/>
+
+                    <!-- Updated Legend -->
+                    <rect x="700" y="50" width="250" height="160" class="legend-bg"/>
+                    <rect x="720" y="70" width="20" height="10" class="budget-bar hardware"/>
+                    <text x="750" y="80" class="legend-text futuristic">Hardware & Compute ($850B)</text>
+                    <rect x="720" y="100" width="20" height="10" class="budget-bar research"/>
+                    <text x="750" y="110" class="legend-text futuristic">Research & Development ($1.2T)</text>
+                    <rect x="720" y="130" width="20" height="10" class="budget-bar infrastructure"/>
+                    <text x="750" y="140" class="legend-text futuristic">Infrastructure ($750B)</text>
+                    <rect x="720" y="160" width="20" height="10" class="budget-bar salaries"/>
+                    <text x="750" y="170" class="legend-text futuristic">Personnel ($350B)</text>
+                    
+                    <!-- Development Milestones -->
+                    <g class="milestones">
+                        <text x="100" y="100" class="milestone-text">Initial Framework</text>
+                        <text x="380" y="100" class="milestone-text">Core Systems</text>
+                        <text x="660" y="100" class="milestone-text">AGI Integration</text>
+                        <text x="940" y="100" class="milestone-text">Full Deployment</text>
+                    </g>
+                </svg>
+            </div>
+        </section>
     </div>
 </body>
 </html>

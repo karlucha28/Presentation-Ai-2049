@@ -3,23 +3,13 @@ let isVideoPlaying = false;
 
 const video = document.querySelector('#videoPlayer');
 const audio = document.querySelector('#videoAudio');
-const soundToggle = document.querySelector('#soundToggle');
 let audioEnabled = false;
 
-// Enable sound on click
-soundToggle.addEventListener('click', () => {
-    if (!audioEnabled) {
+// Show alert when page loads
+window.addEventListener('load', () => {
+    if (confirm('This experience includes sound. Would you like to enable audio?')) {
         audioEnabled = true;
         audio.volume = 0.5;
-        soundToggle.textContent = '🔊 Sound On';
-        if (!video.paused) {
-            audio.currentTime = video.currentTime;
-            audio.play();
-        }
-    } else {
-        audioEnabled = false;
-        audio.pause();
-        soundToggle.textContent = '🔊 Enable Sound';
     }
 });
 
@@ -71,6 +61,84 @@ window.addEventListener('scroll', () => {
             document.documentElement.style.setProperty('--scrollTop', `${adjustedScroll}px`);
             content.style.transform = `translateY(${-adjustedScroll}px)`;
         }
+    }
+    
+    const finalVideo = document.querySelector('#finalVideo');
+    const finalVideoContainer = document.querySelector('.final-video-container');
+    const finalVideoSection = document.querySelector('.final-video-section');
+    
+    // Check if we've scrolled to the final section
+    const finalVideoStart = transitionPoint + content.offsetHeight;
+    
+    if (scrollTop >= finalVideoStart) {
+        finalVideoContainer.classList.add('active');
+        finalVideo.play()
+            .then(() => console.log("Final video playing"))
+            .catch(e => console.log("Final video play failed:", e));
+    } else {
+        finalVideoContainer.classList.remove('active');
+        finalVideo.pause();
+    }
+    
+    const resourceGraph = document.querySelector('.graph-overlay:not(.social)');
+    const socialGraph = document.querySelector('.graph-overlay.social');
+    
+    // Check if we've scrolled to the social cost section
+    const socialGraphStart = finalVideoStart + window.innerHeight;
+    
+    if (scrollTop >= socialGraphStart) {
+        resourceGraph.classList.add('hidden');
+        socialGraph.classList.add('active');
+    } else {
+        resourceGraph.classList.remove('hidden');
+        socialGraph.classList.remove('active');
+    }
+    
+    const govGraph = document.querySelector('.graph-overlay.government');
+    
+    // Check if we've scrolled to the government spending section
+    const govGraphStart = socialGraphStart + window.innerHeight;
+    
+    if (scrollTop >= govGraphStart) {
+        resourceGraph.classList.add('hidden');
+        socialGraph.classList.add('hidden');
+        govGraph.classList.add('active');
+    } else if (scrollTop >= socialGraphStart) {
+        resourceGraph.classList.add('hidden');
+        socialGraph.classList.add('active');
+        socialGraph.classList.remove('hidden');
+        govGraph.classList.remove('active');
+    } else {
+        resourceGraph.classList.remove('hidden');
+        socialGraph.classList.remove('active');
+        govGraph.classList.remove('active');
+    }
+    
+    const aiGraph = document.querySelector('.graph-overlay.ai-budget');
+    
+    // Check if we've scrolled to the AI budget section
+    const aiBudgetStart = govGraphStart + window.innerHeight;
+    
+    if (scrollTop >= aiBudgetStart) {
+        socialGraph.classList.add('hidden');
+        govGraph.classList.add('hidden');
+        aiGraph.classList.add('active');
+    } else if (scrollTop >= govGraphStart) {
+        socialGraph.classList.add('hidden');
+        govGraph.classList.add('active');
+        govGraph.classList.remove('hidden');
+        aiGraph.classList.remove('active');
+    } else if (scrollTop >= socialGraphStart) {
+        resourceGraph.classList.add('hidden');
+        socialGraph.classList.add('active');
+        socialGraph.classList.remove('hidden');
+        govGraph.classList.remove('active');
+        aiGraph.classList.remove('active');
+    } else {
+        resourceGraph.classList.remove('hidden');
+        socialGraph.classList.remove('active');
+        govGraph.classList.remove('active');
+        aiGraph.classList.remove('active');
     }
 });
 

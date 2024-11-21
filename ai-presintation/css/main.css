@@ -394,22 +394,489 @@ body {
     transform: translate(-50%, -50%);
 }
 
-/* Sound toggle button */
-.sound-toggle {
+/* Final video section styles */
+.final-video-section {
+    height: 100vh;
+    position: relative;
+    background-color: #010101;
+    margin-top: 250vh; /* Add margin to position after forest section */
+}
+
+.final-video-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 4; /* Increase z-index to be above other sections */
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.final-video-container.active {
+    opacity: 1;
+}
+
+.final-video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     position: absolute;
-    top: 20px;
-    right: 20px;
-    z-index: 100;
-    padding: 10px 20px;
-    background: rgba(0, 0, 0, 0.5);
-    color: white;
-    border: 1px solid white;
-    border-radius: 5px;
+    top: 0;
+    left: 0;
+}
+
+/* Graph Overlay Styles */
+.graph-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.final-video-container.active + .graph-overlay {
+    opacity: 1;
+}
+
+.graph-overlay svg {
+    width: 100%;
+    height: 100%;
+    opacity: 0.7;
+}
+
+.axis {
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke: #00fff2;
+    filter: drop-shadow(0 0 5px #00fff2);
+}
+
+.graph-line {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    opacity: 0.9;
+    filter: drop-shadow(0 0 8px currentColor);
+}
+
+.oil {
+    stroke: #ff1744;
+}
+
+.gas {
+    stroke: #00fff2;
+}
+
+.coal {
+    stroke: #ffffff;
+}
+
+.legend-bg {
+    fill: rgba(0, 20, 40, 0.7);
+    backdrop-filter: blur(5px);
+    rx: 10;
+    ry: 10;
+    border: 1px solid rgba(0, 157, 255, 0.3);
+    height: 180px;
+}
+
+.label-text.futuristic {
+    fill: #ffffff;
+    font-family: 'kamerik-k', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    filter: drop-shadow(0 0 5px #ffffff);
+}
+
+.legend-text.futuristic {
+    fill: #ffffff;
+    font-family: 'kamerik-k', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    filter: drop-shadow(0 0 3px #ffffff);
+}
+
+.metric-text {
+    fill: #00fff2;
+    font-family: 'kamerik-k', sans-serif;
+    font-size: 12px;
+    filter: drop-shadow(0 0 3px #00fff2);
+}
+
+.glow {
+    filter: drop-shadow(0 0 5px currentColor);
+}
+
+.oil-dot { 
+    fill: #ff1744;
+    filter: drop-shadow(0 0 5px #ff1744);
+}
+.gas-dot { 
+    fill: #00fff2;
+    filter: drop-shadow(0 0 5px #00fff2);
+}
+.coal-dot { 
+    fill: #ffffff;
+    filter: drop-shadow(0 0 5px #ffffff);
+}
+
+/* Enhanced animation for graph lines */
+.graph-line {
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+    animation: drawLine 2.5s ease-out forwards;
+}
+
+@keyframes drawLine {
+    from {
+        stroke-dashoffset: 1000;
+        opacity: 0;
+    }
+    to {
+        stroke-dashoffset: 0;
+        opacity: 0.9;
+    }
+}
+
+/* Cost graph styles */
+.cost-oil {
+    stroke: #ff1744;
+    stroke-dasharray: 4,4;
+    opacity: 0.7;
+}
+
+.cost-gas {
+    stroke: #00fff2;
+    stroke-dasharray: 4,4;
+    opacity: 0.7;
+}
+
+.cost-coal {
+    stroke: #ffffff;
+    stroke-dasharray: 4,4;
+    opacity: 0.7;
+}
+
+.cost-oil-dot { 
+    fill: #ff1744;
+    filter: drop-shadow(0 0 5px #ff1744);
+    opacity: 0.7;
+}
+
+.cost-gas-dot { 
+    fill: #00fff2;
+    filter: drop-shadow(0 0 5px #00fff2);
+    opacity: 0.7;
+}
+
+.cost-coal-dot { 
+    fill: #ffffff;
+    filter: drop-shadow(0 0 5px #ffffff);
+    opacity: 0.7;
+}
+
+.metrics.right {
+    text-align: left;
+}
+
+/* Social Cost Graph Styles */
+.social-cost-section {
+    height: 100vh;
+    position: relative;
+    background-color: #010101;
+    margin-top: 0; /* Remove margin as we'll handle positioning with transforms */
+}
+
+.graph-overlay.social {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 1s ease;
+}
+
+.graph-overlay.social.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.cost-bar {
+    width: 40px;
+    transition: height 1.5s ease-out, transform 1s ease-out;
+    animation: riseUp 2s ease-out forwards;
+}
+
+.cost-bar.private {
+    fill: #00fff2;
+    filter: drop-shadow(0 0 5px #00fff2);
+}
+
+.cost-bar.social {
+    fill: #ff1744;
+    filter: drop-shadow(0 0 5px #ff1744);
+}
+
+.cost-bar.total {
+    opacity: 0.15;
+    mix-blend-mode: overlay;
+}
+
+.private-dot {
+    fill: #00fff2;
+    filter: drop-shadow(0 0 5px #00fff2);
+}
+
+.social-dot {
+    fill: #ff1744;
+    filter: drop-shadow(0 0 5px #ff1744);
+}
+
+.total-dot {
+    fill: #ffffff;
+    filter: drop-shadow(0 0 5px #ffffff);
+}
+
+@keyframes riseUp {
+    from {
+        transform: scaleY(0);
+        opacity: 0;
+    }
+    to {
+        transform: scaleY(1);
+        opacity: 1;
+    }
+}
+
+/* Graph transition styles */
+.graph-overlay {
+    transform: translateY(0);
+    transition: opacity 0.5s ease, transform 1s ease;
+}
+
+.graph-overlay.hidden {
+    transform: translateY(-150%);
+    opacity: 0;
+}
+
+.graph-overlay.social.hidden {
+    transform: translateY(-150%);
+    opacity: 0;
+}
+
+/* Government Spending Graph Styles */
+.gov-spending-section {
+    height: 100vh;
+    position: relative;
+    background-color: #010101;
+}
+
+.graph-overlay.government {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 1s ease;
+}
+
+.graph-overlay.government.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.spend-line {
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 8px currentColor);
+    animation: drawLine 2s ease-out forwards;
+}
+
+.spend-line.defense {
+    stroke: #ff1744;
+}
+
+.spend-line.healthcare {
+    stroke: #00fff2;
+}
+
+.spend-line.social {
+    stroke: #ffeb3b;
+}
+
+.spend-line.interest {
+    stroke: #ff9800;
+}
+
+.debt-line {
+    fill: none;
+    stroke: #f44336;
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    filter: drop-shadow(0 0 10px #f44336);
+    stroke-dasharray: 1000;
+    stroke-dashoffset: 1000;
+}
+
+/* Common graph text styles */
+.label-text.futuristic, .legend-text.futuristic, .metric-text {
+    font-family: 'kamerik-k', sans-serif;
+    font-weight: 100;
+    letter-spacing: 2px;
+    filter: drop-shadow(0 0 3px currentColor);
+}
+
+.label-text.futuristic {
+    font-size: 12px;
+    fill: #00fff2;
+    letter-spacing: 3px;
+}
+
+.legend-text.futuristic {
+    font-size: 12px;
+    fill: #00fff2;
+}
+
+.metric-text {
+    font-size: 10px;
+    fill: #00fff2;
+    letter-spacing: 2px;
+}
+
+/* Quote styling */
+.quote-text {
+    font-family: 'kamerik-k', sans-serif;
+    font-weight: 100;
+    font-size: 14px;
+    letter-spacing: 3px;
+    fill: #ff1744;
+    filter: drop-shadow(0 0 5px #ff1744);
+    text-anchor: middle;
+    font-style: italic;
+}
+
+/* Update text visibility */
+.label-text.futuristic, 
+.legend-text.futuristic, 
+.metric-text,
+.quote-text {
+    opacity: 1 !important;
+}
+
+/* AI Budget Graph Styles */
+.ai-budget-section {
+    height: 100vh;
+    position: relative;
+    background-color: #010101;
+}
+
+.budget-line {
+    stroke: #00fff2;
+    stroke-width: 4;
+    filter: drop-shadow(0 0 15px #00fff2);
+}
+
+.budget-point {
+    fill: #00fff2;
+    filter: drop-shadow(0 0 10px #00fff2);
+}
+
+.budget-estimate {
+    fill: #ff1744;
+    stroke-dasharray: 5,5;
+    opacity: 0.8;
+    filter: drop-shadow(0 0 8px #ff1744);
+}
+
+.highlight-text {
+    font-family: 'kamerik-k', sans-serif;
+    font-weight: 100;
+    font-size: 16px;
+    letter-spacing: 4px;
+    fill: #ff1744;
+    filter: drop-shadow(0 0 8px #ff1744);
+    text-anchor: middle;
+}
+
+.graph-overlay.ai-budget {
+    opacity: 0;
+    transform: translateY(100%);
+    transition: opacity 0.5s ease, transform 1s ease;
+    z-index: 6; /* Make sure it's above other graphs */
+}
+
+.graph-overlay.ai-budget.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.graph-overlay.ai-budget.hidden {
+    transform: translateY(-150%);
+    opacity: 0;
+}
+
+.budget-bar {
+    transition: height 1.5s ease-out;
+    animation: riseUp 2s ease-out forwards;
+    opacity: 0.9;
+}
+
+.budget-bar.hardware {
+    fill: #ff1744;
+    filter: drop-shadow(0 0 8px #ff1744);
+}
+
+.budget-bar.research {
+    fill: #00fff2;
+    filter: drop-shadow(0 0 8px #00fff2);
+}
+
+.budget-bar.infrastructure {
+    fill: #ffeb3b;
+    filter: drop-shadow(0 0 8px #ffeb3b);
+}
+
+.budget-bar.salaries {
+    fill: #7C4DFF;
+    filter: drop-shadow(0 0 8px #7C4DFF);
+}
+
+/* Add hover effect for budget bars */
+.budget-bar {
+    transition: all 0.3s ease;
+}
+
+.budget-bar:hover {
+    filter: brightness(1.5) drop-shadow(0 0 12px currentColor);
     cursor: pointer;
+}
+
+/* Add value tooltips */
+.value-tooltip {
+    fill: white;
+    font-size: 10px;
+    text-anchor: middle;
     opacity: 0;
     transition: opacity 0.3s ease;
 }
 
-.video-container.active .sound-toggle {
+.budget-bar:hover + .value-tooltip {
     opacity: 1;
+}
+
+.milestone-text {
+    font-family: 'kamerik-k', sans-serif;
+    font-size: 12px;
+    fill: #ffffff;
+    text-anchor: middle;
+    opacity: 0.7;
+    filter: drop-shadow(0 0 3px #ffffff);
+}
+
+.graph-overlay.government.hidden {
+    transform: translateY(-150%);
+    opacity: 0;
 }
