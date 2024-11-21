@@ -353,7 +353,7 @@ body {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     z-index: 3;
     opacity: 0;
@@ -362,9 +362,14 @@ body {
 }
 
 .video-container iframe {
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
     object-fit: cover;
+    border: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 /* Add video fade in animation */
@@ -377,4 +382,34 @@ body {
     animation: video-fade 1s ease-in-out forwards;
     animation-timeline: scroll();
     animation-range: 275vh 300vh; /* Start video after darkness is complete */
+}
+
+.video-container video {
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Sound toggle button */
+.sound-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+    padding: 10px 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: 1px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.video-container.active .sound-toggle {
+    opacity: 1;
 }

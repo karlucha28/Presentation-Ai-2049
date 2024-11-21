@@ -1,98 +1,75 @@
 let player;
 let isVideoPlaying = false;
 
-function onYouTubeIframeAPIReady() {
-    player = new YT.Player('videoPlayer', {
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+const video = document.querySelector('#videoPlayer');
+const audio = document.querySelector('#videoAudio');
+const soundToggle = document.querySelector('#soundToggle');
+let audioEnabled = false;
+
+// Enable sound on click
+soundToggle.addEventListener('click', () => {
+    if (!audioEnabled) {
+        audioEnabled = true;
+        audio.volume = 0.5;
+        soundToggle.textContent = '🔊 Sound On';
+        if (!video.paused) {
+            audio.currentTime = video.currentTime;
+            audio.play();
         }
-    });
-}
+    } else {
+        audioEnabled = false;
+        audio.pause();
+        soundToggle.textContent = '🔊 Enable Sound';
+    }
+});
 
-function onPlayerReady(event) {
-    player.mute();
-    // Store player reference globally
-    window.youtubePlayer = player;
-}
-
-function onPlayerStateChange(event) {
-    // Track video state
-    isVideoPlaying = event.data === YT.PlayerState.PLAYING;
-}
-
-// Load YouTube API
-const tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-const firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-// Handle deep scroll animations
 window.addEventListener('scroll', () => {
     const scrollTop = window.scrollY;
     const deepScrollSection = document.querySelector('.deep-scroll');
     const wrapper = document.querySelector('.wrapper');
     const content = document.querySelector('.content');
     const transitionPoint = deepScrollSection.offsetHeight;
-    const pauseDuration = window.innerHeight; // 100vh pause
-    const video = document.querySelector('.video-container');
-    const videoTriggerPoint = transitionPoint - window.innerHeight;
-    const darknessEndPoint = transitionPoint * (275/300); // Match with CSS animation range
+    const pauseDuration = window.innerHeight;
+    const videoContainer = document.querySelector('.video-container');
+    const darknessEndPoint = transitionPoint * (275/300);
     
     if (scrollTop <= transitionPoint) {
-        // Deep scroll section (30%)
         document.documentElement.style.setProperty('--scrollTop', `${scrollTop}px`);
         wrapper.style.display = 'none';
         wrapper.classList.remove('active');
         
-        // Update video trigger point to match darkness transition
         if (scrollTop >= darknessEndPoint) {
-            video.style.opacity = '1';
-            if (!isVideoPlaying && window.youtubePlayer) {
-                window.youtubePlayer.unMute();
-                window.youtubePlayer.playVideo();
+            videoContainer.style.opacity = '1';
+            videoContainer.classList.add('active');
+            video.play().catch(e => console.log("Video play failed:", e));
+            if (audioEnabled) {
+                audio.play().catch(e => console.log("Audio play failed:", e));
             }
         } else {
-            video.style.opacity = '0';
-            if (isVideoPlaying && window.youtubePlayer) {
-                window.youtubePlayer.mute();
-                window.youtubePlayer.pauseVideo();
+            videoContainer.style.opacity = '0';
+            videoContainer.classList.remove('active');
+            video.pause();
+            if (audioEnabled) {
+                audio.pause();
             }
         }
     } else {
-        // Fairy forest section (70%)
         wrapper.style.display = 'block';
-        video.style.opacity = '0';
-        if (player && player.pauseVideo) {
-            player.pauseVideo();
-            player.mute();
-        }
+        videoContainer.style.opacity = '0';
+        video.pause();
+        audio.pause();
+        audio.currentTime = 0;
         
         const forestScrollTop = scrollTop - transitionPoint;
         
-        // During pause, handle fade in
         if (forestScrollTop <= pauseDuration) {
             wrapper.classList.add('active');
             document.documentElement.style.setProperty('--scrollTop', '0px');
             content.style.transform = 'translateY(0)';
         } else {
-            // Slower, smoother scrolling after pause
-            const adjustedScroll = (forestScrollTop - pauseDuration) * 0.7; // Reduced from (7/3)
+            const adjustedScroll = (forestScrollTop - pauseDuration) * 0.7;
             document.documentElement.style.setProperty('--scrollTop', `${adjustedScroll}px`);
             content.style.transform = `translateY(${-adjustedScroll}px)`;
-        }
-    }
-    
-    // Updated video handling logic
-    if (scrollTop >= videoTriggerPoint && scrollTop <= transitionPoint) {
-        if (!isVideoPlaying && window.youtubePlayer) {
-            window.youtubePlayer.unMute();
-            window.youtubePlayer.playVideo();
-        }
-    } else {
-        if (isVideoPlaying && window.youtubePlayer) {
-            window.youtubePlayer.mute();
-            window.youtubePlayer.pauseVideo();
         }
     }
 });
@@ -102,9 +79,9 @@ gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 ScrollSmoother.create({
     wrapper: '.wrapper',
     content: '.content',
-    smooth: 2.5, // Increased from 1.5
+    smooth: 2.5,
     effects: true,
     normalizeScroll: true,
     smoothTouch: 0.1,
-    ease: "power2.out" // Added easing function
+    ease: "power2.out"
 });
